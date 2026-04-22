@@ -99,12 +99,12 @@ def api_menu_detail(request, pk):
             status=200,
         )
 
-    if request.method == 'PUT':
+    if request.method in ['PUT', 'PATCH']:
         payload = _parse_json_body(request)
         if not payload:
             return JsonResponse({'error': 'Invalid JSON body.'}, status=400)
 
-        # API update supports partial fields so Insomnia payloads can stay small.
+        # API update supports partial fields for both PUT and PATCH requests.
         item.name = payload.get('name', item.name)
         item.price = payload.get('price', item.price)
         item.menu_item_description = payload.get('menu_item_description', item.menu_item_description)
@@ -191,12 +191,12 @@ def api_booking_detail(request, pk):
             status=200,
         )
 
-    if request.method == 'PUT':
+    if request.method in ['PUT', 'PATCH']:
         payload = _parse_json_body(request)
         if not payload:
             return JsonResponse({'error': 'Invalid JSON body.'}, status=400)
 
-        # API update supports partial fields for easier iteration in Insomnia.
+        # API update supports partial fields for both PUT and PATCH requests.
         booking.first_name = payload.get('first_name', booking.first_name)
         booking.last_name = payload.get('last_name', booking.last_name)
         booking.guest_number = payload.get('guest_number', booking.guest_number)
